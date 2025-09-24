@@ -28,6 +28,6 @@ public class Decoration extends Auditable {
 
     // todo inserire il prezzo?
 
-    @OneToMany(mappedBy = "orderItemCustomizations", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "decoration", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrderItemCustomization> orderItemCustomizations;
 }

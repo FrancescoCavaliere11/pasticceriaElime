@@ -6,7 +6,6 @@ import org.elime.elimebackend.data.dto.create.*;
 import org.elime.elimebackend.data.entities.*;
 import org.elime.elimebackend.data.enumerators.Role;
 import org.elime.elimebackend.data.repository.*;
-import org.elime.elimebackend.security.exception.customException.MissingEntityIdException;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -33,7 +32,7 @@ public class ModelMapperConfig {
 
         Converter<String, ProductCategory> productCategoryIdToProductCategoryConverter = context -> {
             String id = context.getSource();
-            if(id == null) throw new MissingEntityIdException("Id della categoria mancante");
+            if(id == null) return null;
 
             return productCategoryRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Categoria non trovata"));
@@ -41,7 +40,7 @@ public class ModelMapperConfig {
 
         Converter<String, Product> productIdToProductConverter = context -> {
             String id = context.getSource();
-            if(id == null) throw new MissingEntityIdException("Id del prodotto mancante");
+            if(id == null) return null;
 
             return productRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Prodotto non trovato"));
@@ -49,7 +48,7 @@ public class ModelMapperConfig {
 
         Converter<String, Cream> creamIdToCreamConverter = context -> {
             String id = context.getSource();
-            if(id == null) throw new MissingEntityIdException("Id della crema mancante");
+            if(id == null) return null;
 
             return creamRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Crema non trovata"));
@@ -57,7 +56,7 @@ public class ModelMapperConfig {
 
         Converter<String, Dough> doughIdToDoughConverter = context -> {
             String id = context.getSource();
-            if(id == null) throw new MissingEntityIdException("Id della pasta mancante");
+            if(id == null) return null;
 
             return doughRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Pasta non trovata"));
@@ -65,7 +64,7 @@ public class ModelMapperConfig {
 
         Converter<String, Shape> shapeIdToShapeConverter = context -> {
             String id = context.getSource();
-            if(id == null) throw new MissingEntityIdException("Id della forma mancante");
+            if(id == null) return null;
 
             return shapeRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Forma non trovata"));
@@ -73,7 +72,7 @@ public class ModelMapperConfig {
 
         Converter<String, Decoration> decorationIdToDecorationConverter = context -> {
             String id = context.getSource();
-            if(id == null) throw new MissingEntityIdException("Id della decorazione mancante");
+            if(id == null) return null;
 
             return decorationRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Decorazione non trovata"));
@@ -122,7 +121,6 @@ public class ModelMapperConfig {
             @Override
             protected void configure() {
                 skip().setOrder(null);
-                skip().setProduct(null);
                 skip().setCustomization(null);
                 skip().setOrderItemsComponent(null);
                 using(productIdToProductConverter).map(source.getProductId(), destination.getProduct());
@@ -133,17 +131,13 @@ public class ModelMapperConfig {
         modelMapper.addMappings(new PropertyMap<OrderItemCustomizationCreateDto, OrderItemCustomization>() {
             @Override
             protected void configure() {
+                skip().setId(null);
                 skip().setOrderItem(null);
                 skip().setImgUrl(null);
                 using(creamIdToCreamConverter).map(source.getCreamId(), destination.getCream());
                 using(doughIdToDoughConverter).map(source.getDoughId(), destination.getDough());
-                if(source.getShapeId() != null)
-                    using(shapeIdToShapeConverter).map(source.getShapeId(), destination.getShape());
-                else skip().setShape(null);
-
-                if(source.getDecorationId() != null)
-                    using(decorationIdToDecorationConverter).map(source.getDecorationId(), destination.getDecoration());
-                else skip().setDecoration(null);
+                using(shapeIdToShapeConverter).map(source.getShapeId(), destination.getShape());
+                using(decorationIdToDecorationConverter).map(source.getDecorationId(), destination.getDecoration());
             }
         });
 

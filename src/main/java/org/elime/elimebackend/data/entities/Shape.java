@@ -26,6 +26,6 @@ public class Shape extends Auditable {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @OneToMany(mappedBy = "orderItemCustomizations", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shape", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItemCustomization> orderItemCustomizations;
 }

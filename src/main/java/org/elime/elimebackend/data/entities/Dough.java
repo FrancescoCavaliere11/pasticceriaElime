@@ -29,6 +29,6 @@ public class Dough extends Auditable {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @OneToMany(mappedBy = "orderItemCustomizations", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dough", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItemCustomization> orderItemCustomizations;
 }

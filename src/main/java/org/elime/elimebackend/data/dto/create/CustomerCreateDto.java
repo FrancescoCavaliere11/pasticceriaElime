@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.elime.elimebackend.data.enumerators.Role;
+
 import org.elime.elimebackend.security.customAnnotation.annotation.ValidEmail;
 import org.elime.elimebackend.security.customAnnotation.annotation.ValidPhoneNumber;
 
@@ -13,10 +13,18 @@ import org.elime.elimebackend.security.customAnnotation.annotation.ValidPhoneNum
 public class CustomerCreateDto {
     @NotBlank
     @Size(min = 3, max = 50, message = "Il nome deve essere compreso tra 3 e 50 caratteri")
+    @Pattern(
+            regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ ]+$",
+            message = "Il nome deve contenere solo lettere e spazi"
+    )
     private String name;
 
     @NotBlank
     @Size(min = 3, max = 50, message = "Il cognome deve essere compreso tra 3 e 50 caratteri")
+    @Pattern(
+            regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ ]+$",
+            message = "Il cognome deve contenere solo lettere e spazi"
+    )
     private String surname;
 
     @NotBlank
