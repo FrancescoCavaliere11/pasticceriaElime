@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    int i = 1234;
+    int i = 4321;
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto handleValidationExceptions(HttpServletRequest request, MethodArgumentNotValidException e) {
