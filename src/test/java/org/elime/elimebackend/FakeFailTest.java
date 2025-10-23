@@ -8,6 +8,6 @@ public class FakeFailTest {
     private int i = 0;
     @Test
     void testThatAlwaysFails() {
-        fail("Questo test fallisce intenzionalmente per testare la CI");
+        assertTrue(true);
     }
 }
