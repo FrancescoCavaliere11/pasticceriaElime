@@ -35,4 +35,6 @@ public class AuthController {
                 .status(HttpStatus.CREATED)
                 .build();
     }
+    
 }
+
