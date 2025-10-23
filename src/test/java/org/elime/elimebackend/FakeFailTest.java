@@ -9,6 +9,6 @@ public class FakeFailTest {
     private int i = 0;
     @Test
     void testThatAlwaysFails() {
-        assertTrue(true);
+        assertTrue(false);
     }
 }
