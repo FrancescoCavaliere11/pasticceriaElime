@@ -1,46 +1,13 @@
 name: Spring Boot CI (Gradle)
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
 
 jobs:
-
-  db-setup:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_DB: testdb
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U test"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      - name: Wait for Postgres
-        run: |
-          echo "Waiting for Postgres to be ready..."
-          for i in {1..30}; do
-            pg_isready -h localhost -p 5432 -U test && break
-            sleep 2
-          done
-      - name: Notify DB ready
-        run: echo "Postgres is ready"
-
   build:
     runs-on: ubuntu-latest
-    needs: db-setup  # build parte solo dopo db-setup
     services:
       postgres:
         image: postgres:15
@@ -75,14 +42,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Wait for Postgres
-        run: |
-          echo "Waiting for Postgres to be ready..."
-          for i in {1..30}; do
-            pg_isready -h localhost -p 5432 -U test && break
-            sleep 2
-          done
 
       - name: Build and run tests
         run: ./gradlew clean test
