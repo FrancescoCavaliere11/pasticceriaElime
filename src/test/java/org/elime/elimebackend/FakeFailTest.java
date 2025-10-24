@@ -7,7 +7,7 @@ import static com.jayway.jsonpath.internal.path.PathCompiler.fail;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FakeFailTest {
-    private int i = 0;
+    private int i = 100;
     @Test
     void testThatAlwaysFails() {
         assertTrue(true);
