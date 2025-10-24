@@ -1,5 +1,6 @@
 package org.elime.elimebackend;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.jayway.jsonpath.internal.path.PathCompiler.fail;
@@ -10,5 +11,10 @@ public class FakeFailTest {
     @Test
     void testThatAlwaysFails() {
         assertTrue(true);
+    }
+
+    @Test
+    void testFail() {
+        Assertions.fail();
     }
 }
