@@ -12,7 +12,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: testdb
+          POSTGRES_DB: testdb1
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
         ports:
